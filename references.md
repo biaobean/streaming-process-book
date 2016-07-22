@@ -1,2 +1,4 @@
 # 视频 #
-https://www.youtube.com/channel/UCAPa-K_rhylDZAUHVxqqsRA
+[a](https://www.youtube.com/channel/UCAPa-K_rhylDZAUHVxqqsRA)
+
+[https://www.infoq.com/articles/stream-processing-hadoop]()
