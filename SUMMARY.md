@@ -5,5 +5,5 @@
 * [理论篇](theory.md)
 * [Projects](projects.md)
 * [FAQ](faq.md)
-* 技术篇
+* [技术篇](tech.md)
 
