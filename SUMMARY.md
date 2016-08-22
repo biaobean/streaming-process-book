@@ -5,7 +5,7 @@
 * [理论篇](theory.md)
 * [技术篇](tech.md)
 * [产品篇](project.md)
-   * 历史
+   * [历史](history.md)
 * [应用篇](application.md)
 * [FAQ](faq.md)
 * [参考资料](reference.md)
