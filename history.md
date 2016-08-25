@@ -1,29 +1,34 @@
 # 历史
 
-![](image/history/history.png)[链接](http://midlab.diag.uniroma1.it/articoli/paper%2066.pdf)
 
+![](image/history/history.png)
+
+图片来源[链接](http://midlab.diag.uniroma1.it/articoli/paper%2066.pdf)
+
+从本世纪初通用流处理工具的出现到现在的16年时间里，大致可以把出现的产品分为三个时代：
 
 ## 第一代
-最开始的流处理系统要么是简单的原型、要么是已有数据库引擎的扩展实现（如基于触发器）。通常视为了一些特定的应用场景定制开发，支持的操作非常有限，而
-stream processing systems have been built
-as stand-alone prototypes or as extensions of existing database engines. They were developed with a specific
-use case in mind and are very limited regarding
-the supported operator types as well as available functionalities
-实现的逻辑一般是简单地基于静态规则（Rule）的触发，包括：
-条件（Condition）
-时间（Timer）
-事件（Event）
+最开始的流处理系统通常为了一些特定的简单应用场景定制开发，如数据清洗过滤、状态监控等，实现形式要么是简单的原型、要么是基于已有数据库引擎的扩展实现（如使用触发器）。处理模型一般是简单地基于静态规则（Rule）的触发，包括：
 
-配置状态无关
-简单粗暴的实现却是经济有效的办法。
+* **条件（Condition）**：按预定义的公式，基于系统当前状态和接收到的数据计算结果，值满足一定值域要求的时候运行
+* **时间（Timer）**：在固定时间点或间隔周期运行
+* **事件（Event）**：在接收到指定的某个或某类事件时运行
 
-<u>**简单事件处理（SEP，Simple Event Processing）**</u>
+支持的操作非常有限，通常是和状态无关的简单判断或计算，业务逻辑不可配置（通过code编程固化实现），或者通过配置文件、参数等设置。
+
+简单粗暴的实现有时却是最经济有效的办法，适合于场景固定、业务简单的情况，典型的是<u>**简单事件处理（SEP，Simple Event Processing）**</u>。
+
 ## 第二代
 
-随着场景的复杂，处理逻辑对于上下文状态有依赖，因此要求
-1. 能保留流处理的状态
-2. 处理系统有较高的容错能力（fault tolerance），能在故障后恢复状态
-3. 静态配置编排变成语言编译，
+随着场景的复杂，业务对于流处理的要求也来越高，主要是：
+* 复杂性：支持的业务从简单的值判断到复杂的业务逻辑，并伴随对过去状态的依赖，简单的基于文件的键值配置已经不能满足要求。
+* 可靠性：由于实时应用对于服务停止非常敏感，要求流处理系统的自我修复能力强，即使在故障发生、输入风暴等情况下也能快速恢复服务并修复状态。
+
+因此要求：
+1. 能保留流处理的状态并能支持自适应查询；
+2. 处理系统有较高的容错能力（fault tolerance），能在故障后恢复状态；
+3. 业务逻辑实现从有限的静态配置，到支持越来越多、也越来越复杂的操作符，逻辑对于上下文状态有依赖，最终支持通用语言编程实现。而流处理引擎也从一个简单的DSL配置的解释器变成TC语言编译器。
+4. 对于事件的处理有事务性、正确性要求。
 
 <u>**复杂事件处理（CEP，Complex Event Processing）**</u>
 
@@ -31,39 +36,31 @@ the supported operator types as well as available functionalities
 事件、事务
 
 更加丰富的语义
-systems extended the ideas of data
-stream processing with advanced features such as fault
-tolerance [1], adaptive query processing [34], as well
-as an enhanced operator expressiveness [7]. Important
-examples of this class are Borealis [1], CEDR [7], System
-S [22] and CAPE [34].
-
 
 ## 第三代
-第三代的流处理系统是随着云计算以及大数据的兴起而诞生的，其设计要求引擎有非常好的可扩展能力和更加鲁棒的容错能力。
-system design is strongly driven by the
-trend towards cloud computing, which requires the
-data stream processing engines to be highly scalable
-and robust towards faults. Well-known systems of
-this generation include Apache S4 [30], D-Streams [42],
-Storm [27] and StreamCloud [18].
+第三代的流处理系统是随着云计算以及大数据的兴起而诞生的，传统的流处理技术已经不能满足大数据世代海量数据摄入和快速响应要求。新的流处理引擎采用分布式架构，其特点是：
 
-日志处理（大数据）
+1. 系统吞吐率高、并行性好：通常单节点处理效率为10000条/s以上
+2. 非常好的弹性可扩展能力：
+3. 更加鲁棒的容错能力：
+
+与第二代多为传统IT厂商的商业闭源产品不同，这一时期从互联网公司诞生了许多开源的工具，耳熟能详的有Apache S4，D-Streams，Storm和StreamCloud等等，主要的应用场景是对于海量日志进行收集和处理。
 
 ## 流处理系统与复杂事件处理系统的对比
 
-| 0:0 | 1:0 | 2:0 |
+| 0:0 | 流处理 | 复杂事件处理 |
 | -- | -- | -- |
 | 0:2 | 1:2 | 2:2 |
 | 0:3 | 1:3 | 2:3 |
 | 0:4 | 1:4 | 2:4 |
 | 0:5 | 1:5 | 2:5 |
 | 0:6 | 1:6 | 2:6 |
-| 0:7 | 1:7 | 2:7 |
-| 0:8 | 1:8 | 2:8 |
+| 关注点 | 实时性 | 事务性 |
+| 数据处理 | 更改状态 | 更改类型 |
+| 主要数据类型 | 日志数据处理 | 业务数据处理 |
+| 输入输出一致性保证 | 基本一致 | 严格一致 |
 | 0:9 | 1:9 | 2:9 |
-| 0:10 | 1:10 | 2:10 |
 
 ## 参考资料
 
-1. [Tutorial: Cloud-based Data Stream Processing](http://midlabTutorial: Cloud-based Data Stream Processing.diag.uniroma1.it/articoli/paper 66.pdf)
+1. [][Tutorial: Cloud-based Data Stream Processing](http://midlabTutorial: Cloud-based Data Stream Processing.diag.uniroma1.it/articoli/paper 66.pdf)
