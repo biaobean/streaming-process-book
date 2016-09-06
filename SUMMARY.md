@@ -6,7 +6,7 @@
 * [技术篇](tech.md)
 * [产品篇](project.md)
    * [历史](history.md)
-   * [对比](comp ai r son.md)
+   * [对比](comparison.md)
 * [应用篇](application.md)
    * [ETL处理](etl.md)
 * [FAQ](faq.md)
