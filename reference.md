@@ -10,5 +10,6 @@
 1. 2014, "[A Survey of the Stream
 Processing Landscape](http://sfb876.tu-dortmund.de/PublicPublicationFiles/bockermann_2014b.pdf)"
 
+## 厂商博客
 
-
+1. https://www.mapr.com/blog/real-time-event-streaming-what-are-your-options
