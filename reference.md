@@ -14,3 +14,8 @@ Processing Landscape](http://sfb876.tu-dortmund.de/PublicPublicationFiles/bocker
 ## 厂商博客
 
 1. https://www.mapr.com/blog/real-time-event-streaming-what-are-your-options
+
+
+
+
+http://tek-tips.nethawk.net/which-stream-processing-engine-storm-spark-samza-or-flink/
